@@ -1,6 +1,6 @@
 {
   "name": "ember-themed-syntax",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An out-of-the-box solution for syntax highlighting with a couple of themes included",
   "keywords": [
     "ember-addon",
