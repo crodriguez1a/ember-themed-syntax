@@ -1,16 +1,10 @@
-import Ember from 'ember';
 import layout from '../templates/components/themed-syntax';
 import trimRight from 'ember-themed-syntax/-private/trim-right';
-import { computed } from 'ember-decorators/object';
 import { equal } from 'ember-decorators/object/computed';
 import codeHighlightLinenums from 'code-highlight-linenums';
 import hljs from 'highlight';
-
-const {
-  Component,
-  get,
-  set
-} = Ember;
+import { get, set, computed } from '@ember/object';
+import Component from '@ember/component';
 
 /**
   A styled code highlighting component
@@ -30,7 +24,7 @@ export default Component.extend({
     Binding code input
 
     @property code
-    @type String
+    @type {String}
     @default
     @public
   */
@@ -40,7 +34,7 @@ export default Component.extend({
     Define CSS scope
 
     @property theme
-    @type String
+    @type {String}
     @default light
     @public
   */
@@ -50,24 +44,24 @@ export default Component.extend({
     Compute class name from theme option provided
 
     @property _theme
-    @type String
+    @type {String}
     @private
   */
-  @computed('theme')
-  _theme(theme) {
+  _theme: computed('theme', function() {
+    const theme = get(this, 'theme');
     let defaults = {
       dark: 'hybrid',
       light: 'github-gist'
     };
     return defaults.hasOwnProperty(theme) ? defaults[theme] : theme;
-  },
+  }),
 
   /**
     Signal if theme is set to dark,
     bound to dark class (so that line numbers will be styled accordingly)
 
     @property dark
-    @type Boolean
+    @type {Boolean}
     @default false
     @private
   */
@@ -77,19 +71,19 @@ export default Component.extend({
    Compute highlighted code
 
    @property code
-   @type String
+   @type {String}
    @private
    */
-  @computed('code')
-  highlightedCode(code) {
+  highlightedCode: computed('code', function() {
+    const code = get(this, 'code');
     return this._highlight(code);
-  },
+  }),
 
   /**
     Signal if the container should be transparent (background color set to none)
 
     @property transparent
-    @type Bool
+    @type {Bool}
     @default false
     @public
   */
@@ -99,7 +93,7 @@ export default Component.extend({
     Syntax language
 
     @property lang
-    @type String
+    @type {String}
     @default html
     @public
   */
@@ -109,7 +103,7 @@ export default Component.extend({
    Signal if line numbers should be excluded
 
    @property withLineNumbers
-   @type Boolean
+   @type {Boolean}
    @default true
    @public
   */
@@ -119,7 +113,7 @@ export default Component.extend({
     Adds a line break to beginning and end of each block
 
     @property withBuffers
-    @type Boolean
+    @type {Boolean}
     @default true
     @public
   */
@@ -129,6 +123,7 @@ export default Component.extend({
     Convert raw block to highlighted block using HighlightJS
 
     @method _highlight
+    @returns {String}
     @private
   */
   _highlight(code) {

@@ -45,7 +45,7 @@ module.exports = {
 
     this._super.included.apply(this, arguments);
 
-    let target = parentAddon || app;
+    var target = parentAddon || app;
 
     // Vendor shims
     target.import('vendor/shims/code-highlight-linenums.js');
